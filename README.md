@@ -34,7 +34,6 @@ Principal Component  1 for 0.18822793060925014
 Principal Component  2 for 0.06392275282080973
 Principal Component  3 for 0.04026355667943605
 ```
-![alt text](https://github.com/jf20541/PCARiskModel/blob/main/plots/TotalPCA.png?raw=true)
 
 ![alt text](https://github.com/jf20541/PCARiskModel/blob/main/plots/Factor%20Returns.png?raw=true)
 
