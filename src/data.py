@@ -11,10 +11,10 @@ def fetch_data():
 
     if df.isnull().values.any() == False:
         df.to_csv(config.TRAINING_FILE, index_label=False)
-        print('No Null values found')
+        print("No Null values found")
     else:
-        print('Null values Found, clean data')
+        print("Null values Found, clean data")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     fetch_data()
