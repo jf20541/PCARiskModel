@@ -82,6 +82,9 @@ if __name__ == '__main__':
     # Call the PCARiskModel class to plot 4 component returns 
     pca_model = PCARiskModel(returns, 252, 4, pca)
 
+    for idx, val in enumerate(pca.explained_variance_ratio_):
+        print(f'Principal Component  {idx} for {val}')
+
     # plot Total Percent Variance Explained and Factor Returns
     def plot():
         plt.bar(np.arange(4), pca.explained_variance_ratio_)
