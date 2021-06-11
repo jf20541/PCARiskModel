@@ -1,25 +1,46 @@
 # PCARiskModel
 
 ## Objective 
-Principal Component Analysis (PCA): Reduces the dimensionality of the data and finds the optimal number of components that captures the max amount of explained variance\
+Principal Component Analysis (PCA): Reduces the dimensionality of the data and finds the optimal number of components that captures the max amount of explained variance
 
-PCA Risk-Factor Model: 𝐫 = 𝐁𝐟 + 𝐬
+PCA Risk-Factor Model:\
+![](https://latex.codecogs.com/gif.latex?%5Cdpi%7B120%7D%20%5Cbg_white%20%5CLARGE%20%5Cmathbf%7Br%20%3D%20Bf%20&plus;%20s%7D)
+
 
 ### Parameters
 - `Factor Exposure (B)`: Number of ETFs X Number of Factors (matrix)
-- `Factor Returns (f)`: Number of Factors X Number of Timestamps (matrix)
-- `Idiosyncratic Risk (s)`: Number of ETFs X Number of Timestamps (matrix)
-- `Returns (r)`: Number of ETFs X Number of Timestamps (matrix)
 
-### Methods
-- `Augmented Dickey Fuller (ADF) Test`: tests the null hypothesis that a unit root is present in a time series
-- `Autocorrelation Function (ACF) `: Coefficient of correlation between two values in a time series 
+- `Factor Returns (f)`: Number of Factors X Number of Timestamps (matrix)\
+![](https://latex.codecogs.com/gif.latex?%5Cdpi%7B120%7D%20%5Cbg_white%20%5CLARGE%20%5Cmathbf%7Bf%20%3D%20B%5E%7BT%7Dr%7D)
+
+- `Idiosyncratic Risk (s)`: Number of ETFs X Number of Timestamps (matrix)\
+![](https://latex.codecogs.com/gif.latex?%5Cdpi%7B120%7D%20%5Cbg_white%20%5CLARGE%20%5Cmathbf%7Bs%20%3D%20r%20-%20Bf%7D)
+
+- `Idiosyncratic Risk  of the Residuals (S)`:\
+Calculated the covar matrix of the residuals and set off-diagonal elements to 0\
+![](https://latex.codecogs.com/gif.latex?%5Cdpi%7B120%7D%20%5Cbg_white%20%5CLARGE%20%5Cmathbf%7BS%20%3D%20%5Cfrac%7B1%7D%7BT-1%7Dss%5E%7BT%7D%7D)
+
+- `Returns (r)`: Number of ETFs X Number of Timestamps (matrix)\
+![](https://latex.codecogs.com/gif.latex?%5Cdpi%7B120%7D%20%5Cbg_white%20%5CLARGE%20%5Cmathbf%7Br%20%3D%20Bf%20&plus;%20s%7D)
+ 
+- `Factor Covariance Matrix (F)`:\
+![](https://latex.codecogs.com/gif.latex?%5Cdpi%7B120%7D%20%5Cbg_white%20%5CLARGE%20%5Cmathbf%7BF%20%3D%20%5Cfrac%7B1%7D%7BT-1%7Dff%5E%7BT%7D%7D)
+
 
 ### Output
+Component-1 = ~65% of explained variance\
+Component-2 = ~20% of explained variance\
+Component-2 = ~10% of explained variance
+
+![alt text](https://github.com/jf20541/PCARiskModel/blob/main/plots/TotalPCA.png?raw=true)
+
+![alt text](https://github.com/jf20541/PCARiskModel/blob/main/plots/Factor%20Returns.png?raw=true)
+
+
 
 
 ### Code
-Created 4 modules
+Created 3 modules
 - `config.py`: Define paths as global variables
 - `main.py`: Use Principal Component Analysis as a Risk Factor Model 
 - `data.py`: Clean data and get daily returns for all 10 SPDR ETF Sector ETFs
