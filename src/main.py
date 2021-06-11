@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 def factor_exposure(pca, beta_idx, beta_cols):
     """
     Parameters
-    - pca:
-    - beta_idx: 1 dimensional np-array of returns.shape[0]
-    - beta_cols:1 dimensional np-array of (n_components - 1)
+    - pca: dimensionality reduction
+    - beta_idx: 1 dimensional np-array containing index-dates
+    - beta_cols: 1 dimensional np-array of (n_components - 1)
 
     Returns: Pandas DataFrame of Factor Exposure (B)
     """
@@ -20,10 +20,10 @@ def factor_exposure(pca, beta_idx, beta_cols):
 def factor_returns(pca, returns, return_idx, return_cols):
     """
     Parameters
-    - pca:
-    - returns:
-    - return_idx:
-    - return_cols:
+    - pca: dimensionality reduction
+    - returns: daily returns dataframe
+    - return_idx: dimensional np-array containing index-dates
+    - return_cols: 1 dimensional np-array of (n_components - 1)
 
     Returns: Pandas DataFrame of Factor Returns (f)
     """
@@ -33,10 +33,10 @@ def factor_returns(pca, returns, return_idx, return_cols):
 def idiosyncratic_var_matrix(returns, factor_returns, factor_exposure, ann_factor):
     """
     Parameters
-    - returns:
-    - factor_returns:
-    - factor_exposure:
-    - ann_factor:
+    - returns: daily returns dataframe
+    - factor_returns: output of the factor_returns function 
+    - factor_exposure: output of the factor_exposure function 
+    - ann_factor: annualized of 252 trading days 
 
     Returns: Pandas DataFrame of Idiosyncratic Risk (s)
     """
@@ -47,10 +47,10 @@ def idiosyncratic_var_matrix(returns, factor_returns, factor_exposure, ann_facto
 def factor_cov_matrix(factor_returns, ann_factor):    
     """
     Parameters
-    - factor_returns: 
-    - ann_factor: 
+    - factor_returns: output of the factor_exposure function 
+    - ann_factor: annualized of 252 trading days
 
-    Returns:
+    Returns: calculated the annualized factor covariance in diagonal np-array 
     """
     return np.diag(factor_returns.var(axis=0, ddof=1)*ann_factor)
 
@@ -58,12 +58,12 @@ def factor_cov_matrix(factor_returns, ann_factor):
 class PCARiskModel():
     """
     Parameters
-    - returns: 
-    - ann_factor:
-    - n_components:
-    - pca:
+    - returns: daily returns dataframe
+    - ann_factor: annualized of 252 trading days
+    - n_components: number of PC 
+    - pca: dimensionality reduction
 
-    Returns:
+    Returns: returns time-series 
     """
     def __init__(self, returns, ann_factor, n_components, pca):
         self.factor_exposure_ = factor_exposure(pca, returns.columns.values, np.arange(n_components))
@@ -79,20 +79,18 @@ if __name__ == '__main__':
     pca = PCA(n_components=4, svd_solver='full')
     pca.fit(returns)
 
-    # Call the PCARiskModel class to plot the cumulative sum of returns
-    rm = PCARiskModel(returns, 252, 4, pca)
+    # Call the PCARiskModel class to plot 4 component returns 
+    pca_model = PCARiskModel(returns, 252, 4, pca)
 
-    # Make the bar plot
+    # plot Total Percent Variance Explained and Factor Returns
     def plot():
         plt.bar(np.arange(4), pca.explained_variance_ratio_)
         plt.title('Total Percent Variance Explained')
         plt.ylabel('Explained Variance (%)')
         plt.xlabel('Number of Components')
         plt.savefig('../plots/TotalPCA.png')
-        plt.savefig('books_read.png')
 
-        
-        rm.factor_returns_.loc[:,0:3].cumsum().plot()
+        pca_model.factor_returns_.loc[:,0:3].cumsum().plot()
         plt.title('Factor Returns')
         plt.ylabel('Component Returns(%)')
         plt.xlabel('Time')
@@ -100,6 +98,3 @@ if __name__ == '__main__':
 
     plot()
     plt.show()
-
-
-# https://www.youtube.com/watch?v=KJPaRcXiwfA
