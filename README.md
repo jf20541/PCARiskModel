@@ -46,15 +46,6 @@ Created 3 modules
 - `main.py`: Use Principal Component Analysis as a Risk Factor Model 
 - `data.py`: Clean data and get daily returns for all 10 SPDR ETF Sector ETFs
 
-
-### Install
-Python libraries installed:
-- [Pandas](http://pandas.pydata.org)
-- [NumPy](https://numpy.org/)
-- [Sklearn](https://scikit-learn.org/stable/)
-- [YFinance](https://pypi.org/project/yfinance/)
-
-
 ### Run
 In a terminal or command window, navigate to the top-level project directory `PCARiskModel/` and run one of the following command:
 ```bash
