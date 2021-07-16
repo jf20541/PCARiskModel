@@ -37,19 +37,7 @@ Principal Component  3 for 0.04026355667943605
 
 ![alt text](https://github.com/jf20541/PCARiskModel/blob/main/plots/Factor%20Returns.png?raw=true)
 
-
-
-
 ### Code
-Created 3 modules
-- `config.py`: Define paths as global variables
 - `main.py`: Use Principal Component Analysis as a Risk Factor Model 
 - `data.py`: Clean data and get daily returns for all 10 SPDR ETF Sector ETFs
-
-### Run
-In a terminal or command window, navigate to the top-level project directory `PCARiskModel/` and run one of the following command:
-```bash
-pip install --upgrade pip && pip install -r requirements.txt
-```
-
-### Sources
+- `config.py`: Define paths as global variables
