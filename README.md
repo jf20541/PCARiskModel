@@ -1,30 +1,45 @@
-# PCARiskModel
+# PCARiskModel & PCASectorETF
 
-## Objective 
+## Objective for PCARiskModel
 Principal Component Analysis (PCA): Reduces the dimensionality of the data and finds the optimal number of components that captures the max amount of explained variance
 
 PCA Risk-Factor Model:\
 ![](https://latex.codecogs.com/gif.latex?%5Cdpi%7B120%7D%20%5Cbg_white%20%5CLARGE%20%5Cmathbf%7Br%20%3D%20Bf%20&plus;%20s%7D)
 
+
+## Objective for PCASectorETF
+Using Principal Component Analysis (PCA) as a Risk-Factor Model to reduces the dimensionality of these data and finds a representation of them that explains a maximum amount of their variance
+
 ## Repository File Structure
     ├── src          
     │   ├── main.py              # Use Principal Component Analysis as a Risk Factor Model
     │   ├── data.py              # Clean data and get daily returns for all 10 SPDR ETF Sector ETFs
-    │   └── config.py            # Define path as global variable
+    │   ├── config.py            # Define path as global variable
+    │   ├── ETF_main.py              # Calculated n-components needed to retain a given amount of variance and percentage of dimensionality reduction
+    │   ├── ETF_webscrape.py         # Webscrape the SP500 WikiTable using BeautifulSoup and append all assets into a list
+    │   ├── ETF_data.py              # Extract Adjusted-Closing price of all SP500 Equities from the webscrape.py list
     ├── plots
     │   ├── Factor Returns.png   # Factor Returns time-series
     │   └── TotalPCA.png         # Total Percent Variance Explained
     ├── inputs
-    │   └── train.csv            # Adj-Closing Price for SPDR Sector ETF
+    │   ├── train.csv            # Adj-Closing Price for SPDR Sector ETF
+    │   ├── sp_train.py          # SPDR Sector ETF Adj-Closing Price 
+    │   └── train.csv            # Adj-Closing Price data
     ├── requierments.txt         # Packages used for project
     └── README.md
-    
-## Output
+        
+## Output for PCA Risk Model
 ```bash
 Principal Component  0 for 0.6286258454061395
 Principal Component  1 for 0.18822793060925014
 Principal Component  2 for 0.06392275282080973
 Principal Component  3 for 0.04026355667943605
+```
+## Output for PCA Sector ETF
+```
+Sum of all Variance Retained: 0.928%
+Number of Principal Components Needed: 3
+Reduced the Dimenionality of the timeseries by: 70.0%
 ```
 
 ## Parameters
