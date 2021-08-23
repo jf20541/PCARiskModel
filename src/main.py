@@ -6,39 +6,41 @@ import matplotlib.pyplot as plt
 
 
 def factor_exposure(pca, beta_idx, beta_cols):
-    """
-    Parameters
-    - pca: dimensionality reduction
-    - beta_idx: 1 dimensional np-array containing index-dates
-    - beta_cols: 1 dimensional np-array of (n_components - 1)
-
-    Returns: Pandas DataFrame of Factor Exposure (B)
+    """Factor Exposure shows how exposed each asset is to each risk factor.
+        A specific variance of assets that is not explained by the risk factors.
+    Args:
+        pca [object]: dimensionality reduction
+        beta_idx [date]: 1 dimensional np-array containing index-dates
+        beta_cols [int]: 1 dimensional np-array of (n_components - 1)
+    Returns:
+        [float]: Pandas DataFrame of Factor Exposure (B)
     """
     return pd.DataFrame(pca.components_.T, beta_idx, beta_cols)
 
 
 def factor_returns(pca, returns, return_idx, return_cols):
-    """
-    Parameters
-    - pca: dimensionality reduction
-    - returns: daily returns dataframe
-    - return_idx: dimensional np-array containing index-dates
-    - return_cols: 1 dimensional np-array of (n_components - 1)
-
-    Returns: Pandas DataFrame of Factor Returns (f)
+    """Measures the returns of your portfolio that is due to the alpha vector.
+        Depends on the stock universe and time window of our theoretical portfolio
+    Args:
+        pca [object]: dimensionality reduction
+        returns [float]: daily returns dataframe
+        return_idx [float]: dimensional np-array containing index-dates
+        return_cols [int]: 1 dimensional np-array of (n_components - 1)
+    Returns:
+        [float]: Pandas DataFrame of Factor Returns (f)
     """
     return pd.DataFrame(pca.transform(returns), return_idx, return_cols)
 
 
 def idiosyncratic_var_matrix(returns, factor_returns, factor_exposure, ann_factor):
-    """
-    Parameters
-    - returns: daily returns dataframe
-    - factor_returns: output of the factor_returns function
-    - factor_exposure: output of the factor_exposure function
-    - ann_factor: annualized of 252 trading days
-
-    Returns: Pandas DataFrame of Idiosyncratic Risk (s)
+    """Idiosyncratic risk matrix (original returns data minus the part we represent with the PCA)
+    Args:
+        returns [float]: daily returns dataframe
+        factor_returns [float]: output of the factor_returns function
+        factor_exposure [float]: output of the factor_exposure function
+        ann_factor [int]: annualized of 252 trading days
+    Returns:
+        [float]: Pandas DataFrame of Idiosyncratic Risk (S)
     """
     common_returns = pd.DataFrame(
         np.dot(factor_returns, factor_exposure.T), returns.index, returns.columns
@@ -50,25 +52,20 @@ def idiosyncratic_var_matrix(returns, factor_returns, factor_exposure, ann_facto
 
 
 def factor_cov_matrix(factor_returns, ann_factor):
-    """
-    Parameters
-    - factor_returns: output of the factor_exposure function
-    - ann_factor: annualized of 252 trading days
-
-    Returns: calculated the annualized factor covariance in diagonal np-array
+    """Calculate the cov matrix of the residuals and set the off diagonal elements to zero
+    Args:
+        factor_returns [float]: output of the factor_exposure function
+        ann_factor [int]: annualized of 252 trading days
+    Returns:
+        [float]: calculated the annualized factor covariance in diagonal np-array
     """
     return np.diag(factor_returns.var(axis=0, ddof=1) * ann_factor)
 
 
 class PCARiskModel:
     """
-    Parameters
-    - returns: daily returns dataframe
-    - ann_factor: annualized of 252 trading days
-    - n_components: number of PC
-    - pca: dimensionality reduction
-
-    Returns: returns time-series
+    Using PCA to reduce the dimensionality of the data and that captures
+    max amount of their variance. Minimize risk as part of an optimization problem
     """
 
     def __init__(self, returns, ann_factor, n_components, pca):
@@ -85,14 +82,14 @@ class PCARiskModel:
 
 
 if __name__ == "__main__":
-    returns = pd.read_csv(config.TRAINING_FILE)
+    df_returns = pd.read_csv(config.TRAINING_FILE)
 
     # initiate PCA and fit daily returns
     pca = PCA(n_components=4, svd_solver="full")
-    pca.fit(returns)
+    pca.fit(df_returns)
 
     # Call the PCARiskModel class to plot 4 component returns
-    pca_model = PCARiskModel(returns, 252, 4, pca)
+    pca_model = PCARiskModel(df_returns, 252, 4, pca)
 
     for idx, val in enumerate(pca.explained_variance_ratio_):
         print(f"Principal Component  {idx} for {val}")
@@ -110,6 +107,6 @@ if __name__ == "__main__":
         plt.ylabel("Component Returns(%)")
         plt.xlabel("Time")
         plt.savefig("../plots/Factor Returns.png")
+        plt.show()
 
     plot()
-    plt.show()

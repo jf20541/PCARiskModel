@@ -1,7 +1,7 @@
 import pandas as pd
 import yfinance as yf
 import config
-from webscrape import SPYScraper
+from ETF_webscrape import SPYScraper
 
 
 def fetch_data():

@@ -1,14 +1,15 @@
 import pandas as pd
-import numpy as np
 import config
 from sklearn.decomposition import PCA
 
 
 def pca_components(returns, var_ret):
-    """
-    Calculated the number of components needed to retain a given amount of variance
-    returns: parameter returns calculate using pct_change()
-    var_ret: varinace returns range [0,1]
+    """Calculated the number of components needed to retain a given amount of variance
+    Args:
+        returns ([float]): parameter returns calculate using pct_change()
+        var_ret ([float]): varinace returns range [0,1]
+    Returns:
+        [type]: [description]
     """
     if var_ret == 1:
         return returns.shape[1]
