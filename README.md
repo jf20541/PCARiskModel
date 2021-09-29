@@ -38,7 +38,7 @@ Principal Component  3 for 0.04026355667943605
 ## Output for PCA Sector ETF
 ```
 Sum of all Variance Retained: 0.928%
-Number of Principal Components Needed: 3
+Number of Principal Components Needed: 4
 Reduced the Dimenionality of the timeseries by: 70.0%
 ```
 
