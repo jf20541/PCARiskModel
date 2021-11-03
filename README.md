@@ -15,9 +15,9 @@ Using Principal Component Analysis (PCA) as a Risk-Factor Model to reduces the d
     │   ├── main.py              # Use Principal Component Analysis as a Risk Factor Model
     │   ├── data.py              # Clean data and get daily returns for all 10 SPDR ETF Sector ETFs
     │   ├── config.py            # Define path as global variable
-    │   ├── ETF_main.py              # Calculated n-components needed to retain a given amount of variance and percentage of dimensionality reduction
-    │   ├── ETF_webscrape.py         # Webscrape the SP500 WikiTable using BeautifulSoup and append all assets into a list
-    │   ├── ETF_data.py              # Extract Adjusted-Closing price of all SP500 Equities from the webscrape.py list
+    │   ├── ETF_main.py          # Calculated n-components needed to retain a given amount of variance and percentage of dimensionality reduction
+    │   ├── ETF_webscrape.py     # Webscrape the SP500 WikiTable using BeautifulSoup and append all assets into a list
+    │   ├── ETF_data.py          # Extract Adjusted-Closing price of all SP500 Equities from the webscrape.py list
     ├── plots
     │   ├── Factor Returns.png   # Factor Returns time-series
     │   └── TotalPCA.png         # Total Percent Variance Explained
